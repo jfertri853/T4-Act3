@@ -2,6 +2,11 @@ package org.example
 
 class Person(weight: Double, height: Double) {
 
+    companion object {
+        const val AVERAGE_HEIGHT: Double = 1.75
+        const val AVERAGE_WEIGHT: Double = 70.0
+    }
+
     var weight = verifyWeight(weight)
         set(value) {
             field = verifyWeight(value)
@@ -83,6 +88,39 @@ class Person(weight: Double, height: Double) {
      */
     private fun calculateBMI(weight: Double, height: Double): Double {
         return weight / (height * height)
+    }
+
+
+    /** Devuelve un saludo con el nombre de la persona
+     *
+     * @return Un saludo
+     */
+    fun greet(): String {
+
+        val greetName: String = when (name) {
+            null -> "Sin Nombre"
+            else -> name as String
+        }
+
+        return "Hola, soy $greetName"
+    }
+
+
+    /** Comprueba si la altura está por encima de la media
+     *
+     * @return devuelve si la altura de esta persona está por encima de la media
+     */
+    private fun isAboveAverageHeight(): Boolean {
+        return height > AVERAGE_HEIGHT
+    }
+
+
+    /** Comprueba si el peso está por encima de la media
+     *
+     * @return devuelve si el peso de esta persona está por encima de la media
+     */
+    private fun isAboveAverageWeight(): Boolean {
+        return weight > AVERAGE_WEIGHT
     }
 
 
