@@ -17,7 +17,7 @@ class Person(weight: Double, height: Double) {
             field = verifyHeight(value)
         }
 
-    var name: String? = null
+    var name: String = "Sin Nombre"
         set(value) {
             field = verifyName(value)
         }
@@ -63,19 +63,21 @@ class Person(weight: Double, height: Double) {
     }
 
 
-    /** Recibe el nombre y si recibe una cadena vacía devuelve "Sin nombre",
+    /** Recibe el nombre y si recibe una cadena vacía o solo con espacios devuelve "Nombre Vacio",
      * en caso de recibir una cadena con caracteres devuelve esta cadena.
      *
      * @param name El nombre de la persona
      *
      * @return El nombre (Nunca será una cadena vacía)
      */
-    private fun verifyName(name: String?): String {
-        return if (name!!.isBlank()) { //En el main me aseguro de que nunca pueda recibir algo que no sea String
-            "Sin nombre"
-        } else {
-            name
+    private fun verifyName(name: String): String {
+        val newName = name.trim()
+
+        return when (newName) {
+            "" -> "Nombre Vacio"
+            else -> newName
         }
+
     }
 
 
@@ -96,13 +98,7 @@ class Person(weight: Double, height: Double) {
      * @return Un saludo
      */
     fun greet(): String {
-
-        val greetName: String = when (name) {
-            null -> "Sin Nombre"
-            else -> name as String
-        }
-
-        return "Hola, soy $greetName"
+        return "Hola, soy $name"
     }
 
 
@@ -147,7 +143,7 @@ class Person(weight: Double, height: Double) {
     override fun hashCode(): Int {
         var result = weight.hashCode()
         result = 31 * result + height.hashCode()
-        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + name.hashCode()
         return result
     }
 
