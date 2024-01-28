@@ -8,7 +8,7 @@ class Person(weight: Double, height: Double) {
         const val AVERAGE_WEIGHT: Double = 70.0
     }
 
-    private var weight = verifyWeight(weight)
+    private var weight: Double = verifyWeight(weight)
         set(value) {
             field = verifyWeight(value)
         }
