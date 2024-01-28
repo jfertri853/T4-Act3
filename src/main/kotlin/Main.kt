@@ -35,7 +35,24 @@ Finalmente, revisa el IDE e intenta actualizar el modificador de visibilidad de 
 package org.example
 
 fun main() {
-    val persona1 = Person(64.3, 1.8)
-    println(persona1.greet())
-    println(persona1.obtainDescription())
+    val people = arrayOf(
+            Person("Julia", 64.7, 1.72),
+            Person(43.15, 1.80),
+            Person("", 91.0, 1.51),
+            Person("Pedro", 70.44, 1.76),
+            Person("   Juanjo   ", 66.1, 1.67),
+            Person("     ", 100.0, 1.98)
+    )
+
+    for (person in people) {
+        try {
+            person.showGreetings()
+            person.showDescription()
+            println()
+            Thread.sleep(5000)
+        } catch (e: IllegalArgumentException) {
+            println("**ERROR** - $e")
+        }
+    }
+
 }

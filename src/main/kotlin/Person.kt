@@ -1,8 +1,10 @@
 package org.example
 
-class Person(weight: Double, height: Double) {
+import org.example.TypeOfBMI.Companion.obtainTypeOfBMI
 
+class Person(weight: Double, height: Double) {
     companion object {
+
         const val AVERAGE_HEIGHT: Double = 1.75
         const val AVERAGE_WEIGHT: Double = 70.0
     }
@@ -23,7 +25,7 @@ class Person(weight: Double, height: Double) {
         }
 
     private val bmi: Double
-        get() = calculateBMI(this.weight, this.height)
+        get() = calculateBMI()
 
 
     constructor(name: String, weight: Double, height: Double): this(weight, height) {
@@ -81,22 +83,26 @@ class Person(weight: Double, height: Double) {
 
     /** Calcula el Indice de Masa Corporal
      *
-     * @param weight El peso de la persona
-     * @param height La altura de la persona
-     *
      * @return IMC
      */
-    private fun calculateBMI(weight: Double, height: Double): Double {
-        return weight / (height * height)
-    }
+    private fun calculateBMI(): Double {
+        return this.weight / (this.height * this.height)
+    }   //Esto podría ser una función lambda pero no quiero que se calcule cada instancia.
 
 
     /** Devuelve un saludo con el nombre de la persona
      *
      * @return Un saludo
      */
-    fun greet(): String {
-        return "Hola, soy $name"
+    private fun greet(): String {
+        return "Hola, soy ${this.name}"
+    }
+
+
+    /** Muestra el saludo de la persona
+     */
+    fun showGreetings() {
+        println(greet())
     }
 
 
@@ -105,7 +111,7 @@ class Person(weight: Double, height: Double) {
      * @return devuelve si la altura de esta persona está por encima de la media
      */
     private fun isAboveAverageHeight(): Boolean {
-        return height > AVERAGE_HEIGHT
+        return this.height > AVERAGE_HEIGHT
     }
 
 
@@ -114,11 +120,24 @@ class Person(weight: Double, height: Double) {
      * @return devuelve si el peso de esta persona está por encima de la media
      */
     private fun isAboveAverageWeight(): Boolean {
-        return weight > AVERAGE_WEIGHT
+        return this.weight > AVERAGE_WEIGHT
     }
 
 
-    fun obtainDescription(): String {
+    /** Devuelve la descripción del estado de salud según el IMC
+     *
+     * @return Significado del IMC de esta persona
+     */
+    private fun obtainBMIDescription(): String {
+        return obtainTypeOfBMI(this.bmi).description
+    }
+
+
+    /** Devuelve una descripción con nombre, altura, peso e IMC de la persona
+     *
+     * @return Descripción de esta persona
+     */
+    private fun obtainDescription(): String {
         val heightDescription = if (isAboveAverageHeight()) {
             "(Por encima de la media)"
         } else {
@@ -131,15 +150,23 @@ class Person(weight: Double, height: Double) {
             "(Por debajo de la media)"
         }
 
-        val formattedBMI = "%.2f".format(bmi)
+        val formattedBMI = "%.2f".format(this.bmi)
 
-        return "$name con una altura de ${height}m $heightDescription y un peso ${weight}kg $weightDescription" +
-                " tiene un IMC de $formattedBMI"
+        return "${this.name} con una altura de ${this.height}m $heightDescription" +
+                " y un peso ${this.weight}kg $weightDescription" +
+                " tiene un IMC de $formattedBMI (${obtainBMIDescription()})"
+    }
+
+
+    /** Muestra la descripción de esta persona
+     */
+    fun showDescription() {
+        println(obtainDescription())
     }
 
 
     override fun toString(): String {
-        return "Nombre: $name\nPeso: $weight\nAltura: $height\nIMC: $bmi\n"
+        return "Nombre: ${this.name}\nPeso: ${this.weight}\nAltura: ${this.height}\nIMC: ${this.bmi}\n"
     }
 
 
@@ -159,9 +186,9 @@ class Person(weight: Double, height: Double) {
     // Modificado para no generar hashCode de la propiedad bmi,
     // no es necesario porque si weight y height son iguales generan siempre el mismo bmi
     override fun hashCode(): Int {
-        var result = weight.hashCode()
-        result = 31 * result + height.hashCode()
-        result = 31 * result + name.hashCode()
+        var result = this.weight.hashCode()
+        result = 31 * result + this.height.hashCode()
+        result = 31 * result + this.name.hashCode()
         return result
     }
 
