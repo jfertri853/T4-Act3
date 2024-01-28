@@ -7,6 +7,10 @@ enum class TypeOfBMI(val min: Double, val description: String) {
     OBESITY(30.0, "obesidad");
 
     companion object {
+        /** Obtiene el tipo de IMC según el número de IMC recibido
+         *
+         * @return Tipo de IMC
+         */
         fun obtainTypeOfBMI(bmi: Double): TypeOfBMI {
             return when {
                 bmi <= INSUFFICIENT.min -> throw IllegalArgumentException("Se ha ingresado un IMC negativo")
