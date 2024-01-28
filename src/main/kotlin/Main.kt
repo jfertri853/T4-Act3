@@ -35,6 +35,7 @@ Finalmente, revisa el IDE e intenta actualizar el modificador de visibilidad de 
 package org.example
 
 fun main() {
-    val persona1 = Person(64.3, 180.0)
+    val persona1 = Person(64.3, 1.8)
     println(persona1.greet())
+    println(persona1.obtainDescription())
 }

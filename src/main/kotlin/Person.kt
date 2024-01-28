@@ -7,22 +7,22 @@ class Person(weight: Double, height: Double) {
         const val AVERAGE_WEIGHT: Double = 70.0
     }
 
-    var weight = verifyWeight(weight)
+    private var weight = verifyWeight(weight)
         set(value) {
             field = verifyWeight(value)
         }
 
-    var height: Double = verifyHeight(height)
+    private var height: Double = verifyHeight(height)
         set(value) {
             field = verifyHeight(value)
         }
 
-    var name: String = "Sin Nombre"
+    private var name: String = "Sin Nombre"
         set(value) {
             field = verifyName(value)
         }
 
-    val bmi: Double
+    private val bmi: Double
         get() = calculateBMI(this.weight, this.height)
 
 
@@ -71,13 +71,11 @@ class Person(weight: Double, height: Double) {
      * @return El nombre (Nunca será una cadena vacía)
      */
     private fun verifyName(name: String): String {
-        val newName = name.trim()
 
-        return when (newName) {
+        return when (val newName = name.trim()) {
             "" -> "Nombre Vacio"
             else -> newName
         }
-
     }
 
 
@@ -117,6 +115,26 @@ class Person(weight: Double, height: Double) {
      */
     private fun isAboveAverageWeight(): Boolean {
         return weight > AVERAGE_WEIGHT
+    }
+
+
+    fun obtainDescription(): String {
+        val heightDescription = if (isAboveAverageHeight()) {
+            "(Por encima de la media)"
+        } else {
+            "(Por debajo de la media)"
+        }
+
+        val weightDescription = if (isAboveAverageWeight()) {
+            "(Por encima de la media)"
+        } else {
+            "(Por debajo de la media)"
+        }
+
+        val formattedBMI = "%.2f".format(bmi)
+
+        return "$name con una altura de ${height}m $heightDescription y un peso ${weight}kg $weightDescription" +
+                " tiene un IMC de $formattedBMI"
     }
 
 
