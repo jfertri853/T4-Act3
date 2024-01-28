@@ -4,7 +4,6 @@ import org.example.TypeOfBMI.Companion.obtainTypeOfBMI
 
 class Person(weight: Double, height: Double) {
     companion object {
-
         const val AVERAGE_HEIGHT: Double = 1.75
         const val AVERAGE_WEIGHT: Double = 70.0
     }
@@ -112,7 +111,7 @@ class Person(weight: Double, height: Double) {
      */
     private fun isAboveAverageHeight(): Boolean {
         return this.height > AVERAGE_HEIGHT
-    }
+    } //Recordar pregunta sobre esta función
 
 
     /** Comprueba si el peso está por encima de la media
@@ -121,7 +120,7 @@ class Person(weight: Double, height: Double) {
      */
     private fun isAboveAverageWeight(): Boolean {
         return this.weight > AVERAGE_WEIGHT
-    }
+    } //Recordar pregunta sobre esta función
 
 
     /** Devuelve la descripción del estado de salud según el IMC
@@ -131,6 +130,15 @@ class Person(weight: Double, height: Double) {
     private fun obtainBMIDescription(): String {
         return obtainTypeOfBMI(this.bmi).description
     }
+
+
+    /** Formatea el IMC para que solo tenga los 2 primeros números decimales
+     *
+     * @return IMC con solo 2 decimales
+     */
+    private fun formatBMI(): String {
+        return "%.2f".format(this.bmi)
+    } //Recordar pregunta sobre esta función
 
 
     /** Devuelve una descripción con nombre, altura, peso e IMC de la persona
@@ -150,11 +158,9 @@ class Person(weight: Double, height: Double) {
             "(Por debajo de la media)"
         }
 
-        val formattedBMI = "%.2f".format(this.bmi)
-
         return "${this.name} con una altura de ${this.height}m $heightDescription" +
                 " y un peso ${this.weight}kg $weightDescription" +
-                " tiene un IMC de $formattedBMI (${obtainBMIDescription()})"
+                " tiene un IMC de ${formatBMI()} (${obtainBMIDescription()})"
     }
 
 

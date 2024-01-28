@@ -49,7 +49,7 @@ fun main() {
             person.showGreetings()
             person.showDescription()
             println()
-            Thread.sleep(5000)
+            Thread.sleep(3000)
         } catch (e: IllegalArgumentException) {
             println("**ERROR** - $e")
         }
